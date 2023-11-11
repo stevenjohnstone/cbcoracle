@@ -72,7 +72,7 @@ func Decrypt(iv, ciphertext []byte, oracle func(ctx context.Context, iv, cipherb
 		}
 		plaintextBlock, err := DecryptBlock(blockSize, localIV, ct, oracle)
 		if err != nil {
-			panic(err)
+			return res, err
 		}
 		copy(res[i*blockSize:], plaintextBlock)
 	}
