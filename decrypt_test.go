@@ -2,9 +2,9 @@ package cbcoracle
 
 import (
 	"bytes"
+	"context"
 	"crypto/aes"
 	"crypto/cipher"
-  "context"
 	"testing"
 )
 
@@ -29,9 +29,9 @@ func TestDecryptBlock(t *testing.T) {
 	cbc.CryptBlocks(ciphertext, plaintext)
 
 	oracle := func(ctx context.Context, iv, cipherblock []byte) bool {
-    if ctx.Err() != nil {
-      t.Logf("context cancelled")
-    }
+		if ctx.Err() != nil {
+			t.Logf("context cancelled")
+		}
 		decrypter := cipher.NewCBCDecrypter(block, iv)
 		plaintextblock := make([]byte, aes.BlockSize)
 		decrypter.CryptBlocks(plaintextblock, cipherblock)
